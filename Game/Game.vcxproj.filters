@@ -31,6 +31,9 @@
     <Filter Include="Header Files\Asteroids">
       <UniqueIdentifier>{25748b2c-aa8c-4b69-bdf5-9aa087cfcf67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{7de0deb3-34da-4e42-af2b-610f831e2a7d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -99,6 +102,12 @@
     <ClCompile Include="MediumAsteroids.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerLifeUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -163,6 +172,12 @@
     </ClInclude>
     <ClInclude Include="MediumAsteroid.h">
       <Filter>Header Files\Asteroids</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerLifeUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

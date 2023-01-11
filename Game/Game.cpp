@@ -1,5 +1,4 @@
 #include "GameEngine.h"
-#include "Player.h"
 #include "GameManager.h"
 #include "Vector2D.h"
 #include <iostream>
@@ -16,7 +15,7 @@ int main(int argc, char ** argv)
     */
 
 	GameManager::GetInstance()->CreateLevel();
-    GameManager::GetManager()->CreateEntity<Player>();
+    GameManager::GetInstance()->LoadUI();
     
 
     /*

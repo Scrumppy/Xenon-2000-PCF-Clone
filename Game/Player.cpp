@@ -56,8 +56,17 @@ void Player::Init()
 
 	gunOffset = Vector2D(18, -20);
 
-	playerCompanion = GameManager::GetManager()->CreateEntity<Companion>(this);
-	GameManager::GetManager()->CreateEntity<Companion>(this);
+	for (int i = 0; i < 2; ++i)
+	{
+		Companion* companion = GameManager::GetManager()->CreateEntity<Companion>(this);
+		playerCompanions.push_back(companion);
+	}
+
+	playerCompanion1 = playerCompanions[0];
+	playerCompanion2 = playerCompanions[1];
+
+	/*playerCompanion = GameManager::GetManager()->CreateEntity<Companion>(this);
+	GameManager::GetManager()->CreateEntity<Companion>(this);*/
 
 	std::cout << "Player Initialized" << std::endl;
 	std::cout << "Player lives: " << playerLives << std::endl;
@@ -194,6 +203,8 @@ void Player::UpgradeWeapon(WeaponAugment upgrade)
 void Player::ResetLife()
 {
 	this->hp = this->maxHp;
+	playerLives--;
+	GameManager::GetInstance()->EraseLife();
 	DebugLog(LogMessage::WARNING, "Player Lives: " + std::to_string(playerLives));
 }
 
@@ -206,19 +217,20 @@ void Player::TakeDamage(float damage)
 
 	if (this->hp <= 0)
 	{
-		if (playerCompanion)
-		{
-			playerCompanion->Destroy();
-		}
-
 		if (playerLives > 0)
 		{
-			playerLives--;
 			ResetLife();
 		}
 		else if (playerLives <= 0)
 		{
 			playerLives = 0;
+
+			if (playerCompanion1 || playerCompanion2)
+			{
+				playerCompanion1->Destroy();
+				playerCompanion2->Destroy();
+			}
+
 			DebugLog(LogMessage::WARNING, "Player died");
 			Destroy();
 		}

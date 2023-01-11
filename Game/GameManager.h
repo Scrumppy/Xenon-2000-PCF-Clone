@@ -1,6 +1,10 @@
 #pragma once
 
 #include "GameEngine.h"
+#include <vector>
+
+class PlayerLifeUI;
+class Player;
 
 class GameManager
 {
@@ -8,6 +12,10 @@ public:
 	GameManager()
 	{
 		m_manager = &GameEngine::manager;
+
+		player = nullptr;
+
+		indexToRemove = 0;
 
 		lonerSpawnTimer = 0.f;
 		lonerSpawnTimerMax = 100.f + (rand() % (110 - 100) + 1);
@@ -48,7 +56,6 @@ public:
 		GameManager::GetManager()->CreateEntity<T>(position, projectileRange, projectileSpeed);
 	}
 
-	//Create Projectile
 	void CreateLevel();
 
 	void SpawnEnemies();
@@ -57,9 +64,18 @@ public:
 
 	void SpawnPickups();
 
+	void LoadUI();
+
+	void EraseLife();
+
 private:
 	static Manager* m_manager;
 	static GameManager* m_instance;
+
+	Player* player;
+
+	std::vector<PlayerLifeUI*> playerLives;
+	int indexToRemove;
 
 	int enemiesToSpawn;
 

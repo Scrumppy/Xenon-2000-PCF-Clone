@@ -41,7 +41,7 @@ void Companion::Init()
 	}
 	else
 	{
-		DebugLog(LogMessage::WARNING, "Found Player");
+		DebugLog(LogMessage::WARNING, "Player is valid");
 	}
 
 	AddComponent<TransformComponent>(startPosition.x, startPosition.y);

@@ -41,7 +41,9 @@ public:
 
 	inline WeaponAugment GetWeaponAugment() { return currentWeaponAugment; }
 
-	inline Companion* GetCompanion() { return playerCompanion; }
+	inline Companion* GetCompanion() { return playerCompanion1; }
+
+	inline int GetLives() { return playerLives; }
 
 	void FireCooldown();
 
@@ -73,5 +75,8 @@ private:
 
 	Vector2D gunOffset;
 
-	Companion* playerCompanion;
+	Companion* playerCompanion1;
+	Companion* playerCompanion2;
+
+	std::vector<Companion*> playerCompanions;
 };

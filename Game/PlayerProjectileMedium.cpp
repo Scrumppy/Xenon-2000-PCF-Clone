@@ -68,7 +68,7 @@ void PlayerProjectileMedium::BeginOverlap(Entity* otherEntity)
 
 		if (metalAsteroid)
 		{
-			Destroyed(this);
+			Destroy();
 		}
 
 		otherEntity->TakeDamage(this->projectileDamage);

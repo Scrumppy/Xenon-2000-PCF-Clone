@@ -15,6 +15,9 @@
 #include "ShieldPickup.h"
 #include "BigAsteroid.h"
 #include "MetalAsteroid.h"
+#include "PlayerLifeUI.h"
+#include <LogOutput.h>
+#include "Player.h"
 
 GameManager* GameManager::m_instance = nullptr;
 Manager* GameManager::m_manager = nullptr;
@@ -32,14 +35,15 @@ Manager* GameManager::GetManager()
 
 void GameManager::Update()
 {
-	SpawnEnemies();
 	SpawnDebris();
+	SpawnEnemies();
 	SpawnPickups();
 }
 
 void GameManager::CreateLevel()
-{
+{	
 	m_manager->CreateEntity<Level>();
+	player = m_manager->CreateEntity<Player>();
 }
 
 void GameManager::SpawnEnemies()
@@ -55,7 +59,7 @@ void GameManager::SpawnEnemies()
 
 		for (int i = 0; i < enemiesToSpawn; ++i)
 		{
-			GameEngine::manager.CreateEntity<Loner>();
+			m_manager->CreateEntity<Loner>();
 		}
 
 		lonerSpawnTimer = 0.f;
@@ -67,7 +71,7 @@ void GameManager::SpawnEnemies()
 
 		for (int i = 0; i < enemiesToSpawn; ++i)
 		{
-			GameEngine::manager.CreateEntity<Rusher>();
+			m_manager->CreateEntity<Rusher>();
 		}
 
 		rusherSpawnTimer = 0.f;
@@ -79,8 +83,8 @@ void GameManager::SpawnEnemies()
 
 		for (int i = 0; i < asteroidsToSpawn; ++i)
 		{
-			GameEngine::manager.CreateEntity<BigAsteroid>();
-			GameEngine::manager.CreateEntity<MetalAsteroid>();
+			m_manager->CreateEntity<BigAsteroid>();
+			m_manager->CreateEntity<MetalAsteroid>();
 		}
 
 		asteroidSpawnTimer = 0.f;
@@ -124,11 +128,30 @@ void GameManager::SpawnPickups()
 		for (int i = 0; i < pickupsToSpawn; ++i)
 		{
 			//GameEngine::manager.CreateEntity<CompanionPickup>();
-			GameEngine::manager.CreateEntity<WeaponPickup>();
-			GameEngine::manager.CreateEntity<ShieldPickup>();
+			m_manager->CreateEntity<WeaponPickup>();
+			m_manager->CreateEntity<ShieldPickup>();
 		}
 
 		pickupSpawnTimer = 0.f;
+	}
+}
+
+void GameManager::LoadUI()
+{
+	for (int i = 0; i < 3; ++i)
+	{
+		playerLives.push_back(m_manager->CreateEntity<PlayerLifeUI>(Vector2D(20 + (i * 60), 700)));
+	}
+
+	DebugLog(LogMessage::WARNING, "Loaded Player Life UI");
+}
+
+void GameManager::EraseLife()
+{
+	if (playerLives.size() > 0)
+	{
+		playerLives.back()->Destroy();
+		playerLives.pop_back();
 	}
 }
 
